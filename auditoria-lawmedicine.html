@@ -1,0 +1,2655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría UX/UI & Estrategia Digital — Law &amp; Medicine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1A365D;
+            --primary-light: #2B6CB0;
+            --accent: #D69E2E;
+            --accent-light: #ECC94B;
+            --bg-white: #FFFFFF;
+            --bg-gray: #F7FAFC;
+            --bg-dark: #2D3748;
+            --text-primary: #2D3748;
+            --text-secondary: #718096;
+            --text-light: #A0AEC0;
+            --success: #38A169;
+            --danger: #E53E3E;
+            --warning: #DD6B20;
+            --whatsapp: #25D366;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-gray);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background: white; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            section { page-break-inside: avoid; }
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--primary);
+        }
+
+        h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+        h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
+        h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+        h4 { font-size: 1.125rem; }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .report-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #234E82 100%);
+            color: white;
+            padding: 80px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .report-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(214,158,46,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .report-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .report-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(214,158,46,0.2);
+            border: 1px solid rgba(214,158,46,0.4);
+            color: var(--accent-light);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .report-title {
+            color: white;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .report-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .report-url {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-light);
+            font-size: 1rem;
+        }
+
+        .report-meta {
+            display: flex;
+            gap: 32px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .meta-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent);
+        }
+
+        /* Table of Contents */
+        .toc-section {
+            background: var(--bg-white);
+            padding: 48px 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .toc-item:hover {
+            background: #EDF2F7;
+            border-left-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .toc-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            background: rgba(214,158,46,0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .toc-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 64px 0;
+        }
+
+        /* Section Styling */
+        section {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E2E8F0;
+        }
+
+        .section-header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--bg-gray);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .section-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .section-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .section-title {
+            margin: 0;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-gray);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid #E2E8F0;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .card-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .card h4 {
+            margin-bottom: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Problem List */
+        .problem-list {
+            list-style: none;
+        }
+
+        .problem-item {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            border-left: 4px solid var(--danger);
+        }
+
+        .problem-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--danger);
+            background: rgba(229,62,62,0.1);
+            padding: 4px 12px;
+            border-radius: 4px;
+            height: fit-content;
+        }
+
+        .problem-content h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+
+        .problem-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Positive List */
+        .positive-item {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            border-left: 4px solid var(--success);
+        }
+
+        .positive-item .problem-number {
+            color: var(--success);
+            background: rgba(56,161,105,0.1);
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 24px 0;
+            border-radius: var(--radius-md);
+            border: 1px solid #E2E8F0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background: var(--bg-gray);
+        }
+
+        .table-danger {
+            color: var(--danger);
+            font-weight: 500;
+        }
+
+        .table-success {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .table-warning {
+            color: var(--warning);
+            font-weight: 500;
+        }
+
+        /* Color Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-danger {
+            background: rgba(229,62,62,0.1);
+            color: var(--danger);
+        }
+
+        .badge-success {
+            background: rgba(56,161,105,0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(221,107,32,0.1);
+            color: var(--warning);
+        }
+
+        .badge-primary {
+            background: rgba(43,108,176,0.1);
+            color: var(--primary-light);
+        }
+
+        .badge-accent {
+            background: rgba(214,158,46,0.15);
+            color: #B7791F;
+        }
+
+        /* Wireframe */
+        .wireframe {
+            background: #1a1a2e;
+            color: #a0aec0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            line-height: 1.4;
+            padding: 32px;
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        /* Color Swatches */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .swatch-box {
+            height: 80px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .swatch-label {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .swatch-hex {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Comparison Table */
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr;
+            gap: 24px;
+            padding: 20px 0;
+            border-bottom: 1px solid #E2E8F0;
+            align-items: center;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .comparison-current {
+            color: var(--danger);
+        }
+
+        .comparison-new {
+            color: var(--success);
+        }
+
+        /* Callout Box */
+        .callout {
+            padding: 24px;
+            border-radius: var(--radius-md);
+            margin: 24px 0;
+            display: flex;
+            gap: 16px;
+        }
+
+        .callout-warning {
+            background: rgba(221,107,32,0.08);
+            border: 1px solid rgba(221,107,32,0.2);
+        }
+
+        .callout-danger {
+            background: rgba(229,62,62,0.08);
+            border: 1px solid rgba(229,62,62,0.2);
+        }
+
+        .callout-success {
+            background: rgba(56,161,105,0.08);
+            border: 1px solid rgba(56,161,105,0.2);
+        }
+
+        .callout-info {
+            background: rgba(43,108,176,0.08);
+            border: 1px solid rgba(43,108,176,0.2);
+        }
+
+        .callout-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .callout-warning .callout-icon { background: rgba(221,107,32,0.15); color: var(--warning); }
+        .callout-danger .callout-icon { background: rgba(229,62,62,0.15); color: var(--danger); }
+        .callout-success .callout-icon { background: rgba(56,161,105,0.15); color: var(--success); }
+        .callout-info .callout-icon { background: rgba(43,108,176,0.15); color: var(--primary-light); }
+
+        .callout-content h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .callout-content p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Section Navigation */
+        .nav-dots {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-dot:hover, .nav-dot.active {
+            background: var(--accent);
+            border-color: var(--primary);
+        }
+
+        @media (max-width: 1024px) {
+            .nav-dots {
+                display: none;
+            }
+        }
+
+        /* Page Footer */
+        .report-footer {
+            background: var(--primary);
+            color: white;
+            padding: 48px 0;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .footer-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Action Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list svg {
+            width: 20px;
+            height: 20px;
+            color: var(--success);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Sitemap */
+        .sitemap {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 2;
+        }
+
+        .sitemap-folder {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .sitemap-file {
+            color: var(--text-secondary);
+        }
+
+        .sitemap-indent {
+            margin-left: 24px;
+            border-left: 2px solid #E2E8F0;
+            padding-left: 16px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 24px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-md);
+            border: 1px solid #E2E8F0;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 8px;
+        }
+
+        /* Conclusion Box */
+        .conclusion-box {
+            background: linear-gradient(135deg, var(--primary) 0%, #234E82 100%);
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            text-align: center;
+        }
+
+        .conclusion-box h2 {
+            color: white;
+            margin-bottom: 24px;
+        }
+
+        .conclusion-box p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .conclusion-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--accent-light);
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Severity indicators */
+        .severity-high { color: var(--danger); font-weight: 600; }
+        .severity-medium { color: var(--warning); font-weight: 600; }
+        .severity-low { color: var(--text-secondary); }
+
+        /* Icon styles inline */
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Two Column Text */
+        .text-cols-2 {
+            columns: 2;
+            column-gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .text-cols-2 {
+                columns: 1;
+            }
+        }
+
+        /* Homepage Structure */
+        .structure-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+        }
+
+        .structure-number {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .structure-content h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .structure-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            section {
+                padding: 32px 24px;
+            }
+
+            .report-header {
+                padding: 48px 0 64px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comparison-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .comparison-label {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Dots -->
+    <nav class="nav-dots no-print" aria-label="Section navigation">
+        <div class="nav-dot active" data-section="0"></div>
+        <div class="nav-dot" data-section="1"></div>
+        <div class="nav-dot" data-section="2"></div>
+        <div class="nav-dot" data-section="3"></div>
+        <div class="nav-dot" data-section="4"></div>
+        <div class="nav-dot" data-section="5"></div>
+        <div class="nav-dot" data-section="6"></div>
+        <div class="nav-dot" data-section="7"></div>
+    </nav>
+
+    <!-- Header -->
+    <header class="report-header">
+        <div class="container header-content">
+            <div class="report-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+                AUDITORÍA DIGITAL COMPLETA
+            </div>
+            <h1 class="report-title">Auditoría UX/UI & Estrategia Digital</h1>
+            <p class="report-subtitle">Law & Medicine — lawmedicine.com.py</p>
+            <p class="report-url">www.lawmedicine.com.py</p>
+
+            <div class="report-meta">
+                <div class="meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Abril 2026
+                </div>
+                <div class="meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    Equipo de Auditoría Digital
+                </div>
+                <div class="meta-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    Asunción, Paraguay
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Table of Contents -->
+    <section class="toc-section">
+        <div class="container">
+            <h2 style="margin-bottom: 24px; font-size: 1.5rem;">Contenido del Informe</h2>
+            <div class="toc-grid">
+                <a href="#seccion1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    <span class="toc-text">Diagnóstico General</span>
+                </a>
+                <a href="#seccion2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    <span class="toc-text">Problemas Críticos (Top 10)</span>
+                </a>
+                <a href="#seccion3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    <span class="toc-text">Lo Rescatable</span>
+                </a>
+                <a href="#seccion4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    <span class="toc-text">Problemas Visuales</span>
+                </a>
+                <a href="#seccion5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    <span class="toc-text">Problemas de UX</span>
+                </a>
+                <a href="#seccion6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    <span class="toc-text">Problemas de Copy</span>
+                </a>
+                <a href="#seccion7" class="toc-item">
+                    <span class="toc-number">07</span>
+                    <span class="toc-text">Confianza y Conversión</span>
+                </a>
+                <a href="#seccion8" class="toc-item">
+                    <span class="toc-number">08</span>
+                    <span class="toc-text">Nuevo Estilo Visual</span>
+                </a>
+                <a href="#seccion9" class="toc-item">
+                    <span class="toc-number">09</span>
+                    <span class="toc-text">Estructura Nueva Home</span>
+                </a>
+                <a href="#seccion10" class="toc-item">
+                    <span class="toc-number">10</span>
+                    <span class="toc-text">Secciones a Agregar</span>
+                </a>
+                <a href="#seccion11" class="toc-item">
+                    <span class="toc-number">11</span>
+                    <span class="toc-text">Secciones a Eliminar</span>
+                </a>
+                <a href="#seccion12" class="toc-item">
+                    <span class="toc-number">12</span>
+                    <span class="toc-text">Propuesta de Copy</span>
+                </a>
+                <a href="#seccion13" class="toc-item">
+                    <span class="toc-number">13</span>
+                    <span class="toc-text">Dirección de Marca</span>
+                </a>
+                <a href="#seccion14" class="toc-item">
+                    <span class="toc-number">14</span>
+                    <span class="toc-text">Sitemap Propuesto</span>
+                </a>
+                <a href="#seccion15" class="toc-item">
+                    <span class="toc-number">15</span>
+                    <span class="toc-text">Wireframe Home</span>
+                </a>
+                <a href="#seccion16" class="toc-item">
+                    <span class="toc-number">16</span>
+                    <span class="toc-text">Referencias de Estilo</span>
+                </a>
+                <a href="#seccion17" class="toc-item">
+                    <span class="toc-number">17</span>
+                    <span class="toc-text">Conclusión Final</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Section 1: Diagnóstico General -->
+            <section id="seccion1">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">1. Diagnóstico General del Sitio Actual</h2>
+                        <p class="section-subtitle">Estado actual y primera impresión</p>
+                    </div>
+                </div>
+
+                <div class="callout callout-danger">
+                    <div class="callout-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="callout-content">
+                        <h4>Evaluación Global: Template de 2015 en Estado Crítico</h4>
+                        <p>El sitio actual es una plantilla Bootstrap 3.3.1 de 2015, mal mantenida. No posee CTAs, no hay precios, no hay testimonios, stack tecnológico obsoleto. La primera impresión es de un template genérico, NO de una marca premium seria.</p>
+                    </div>
+                </div>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--danger);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <h4>Antigüedad Tecnológica</h4>
+                        <p>Bootstrap 3.3.1, jQuery 3.2.1, Font Awesome 4.5.0. Tecnologías que tienen más de 8 años y ya no reciben soporte de seguridad.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--danger);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5"/>
+                                <path d="M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <h4>Sin Propuesta de Valor</h4>
+                        <p>No hay CTAs en toda la homepage. El usuario no sabe qué hacer next. Cero elementos de conversión.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--danger);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="1" x2="12" y2="23"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                        <h4>Sin Sección de Precios</h4>
+                        <p>Ausencia completa de planes, tarifas o costos. El usuario no puede evaluar si el servicio es accesible.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--danger);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h4>Sin Prueba Social</h4>
+                        <p>No existen testimonios, casos de éxito, logotipos de clientes o certificaciones. Cero credibilidad visible.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Lo Peor del Sitio (Top 10) -->
+            <section id="seccion2">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--danger), #C53030);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">2. Lo Peor del Sitio Actual (Top 10)</h2>
+                        <p class="section-subtitle">Problemas críticos que requieren atención inmediata</p>
+                    </div>
+                </div>
+
+                <ul class="problem-list">
+                    <li class="problem-item">
+                        <span class="problem-number">#1</span>
+                        <div class="problem-content">
+                            <h4>Stack tecnológico de 2016</h4>
+                            <p>Bootstrap 3.3.1, jQuery 3.2.1, Font Awesome 4.5.0 — tecnologías sin soporte de seguridad actual.</p>
+                        </div>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-number">#2</span>
+                        <div class="problem-content">
+                            <h4>Title tag "Law & Medicine" — valor SEO cero</h4>
+                            <p>El título no contiene palabras clave de búsqueda. No indica ubicación, servicio ni propuesta de valor.</p>
+                        </div>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-number">#3</span>
+                        <div class="problem-content">
+                            <h4>Sin sección de precios/planes</h4>
+                            <p>El usuario debe contactar para saber los costos, creando fricción y desconfianza.</p>
+                        </div>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-number">#4</span>
+                        <div class="problem-content">
+                            <h4>Crédito "Developed by Law&Medicine" visible</h4>
+                            <p>Señal de amateurismo. Elimininar créditos de desarrollo del footer público.</p>
+                        </div>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-number">#5</span>
+                        <div class="problem-content">
+                            <h4>Carousel sin CTAs en slides 2 y 3</h4>
+                            <p>El carousel repite información sin направление clear hacia acción. Oportunidad perdida.</p>
+                        </div>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-number">#6</span>
+                        <div class="problem-content">
+                            <h4>Confusión en copy "Gastos para la Defensa Judicial"</h4>
+                            <p>El usuario puede interpretar que DEBE pagar estos gastos, cuando están cubiertos por el servicio.</p>
+                        </div>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-number">#7</span>
+                        <div class="problem-content">
+                            <h4>Uso excesivo de texto en mayúsculas</h4>
+                            <p>El texto TODO EN MAYÚSCULAS parece agresivo y poco profesional. Violación de normas tipográficas.</p>
+                        </div>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-number">#8</span>
+                        <div class="problem-content">
+                            <h4>"Juridico" sin tilde</h4>
+                            <p>Error ortográfico básico. "Jurídico" lleva tilde. Afecta credibilidad profesional.</p>
+                        </div>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-number">#9</span>
+                        <div class="problem-content">
+                            <h4>Jerga "BENEFICIARIO" en mayúsculas</h4>
+                            <p>El cliente no se identifica como "beneficiario". Es un profesional de medicina, no un seguro.</p>
+                        </div>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-number">#10</span>
+                        <div class="problem-content">
+                            <h4>Sin WhatsApp en mercado WhatsApp-first</h4>
+                            <p>Paraguay es un mercado donde WhatsApp es el canal primary de comunicación. Ausencia total.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Section 3: Lo Rescatable -->
+            <section id="seccion3">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--success), #2F855A);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">3. Lo Rescatable del Sitio Actual</h2>
+                        <p class="section-subtitle">Activos existentes que deben preservarse</p>
+                    </div>
+                </div>
+
+                <ul class="problem-list">
+                    <li class="positive-item">
+                        <span class="problem-number">✓</span>
+                        <div class="problem-content">
+                            <h4>Nombre de dominio excelente</h4>
+                            <p>lawmedicine.com.py es un dominio memorable, descriptivo y profesional. Gran activo base.</p>
+                        </div>
+                    </li>
+                    <li class="positive-item">
+                        <span class="problem-number">✓</span>
+                        <div class="problem-content">
+                            <h4>Propuesta de valor base correcta</h4>
+                            <p>"Protegiendo a los profesionales de blanco" — el concepto es bueno, la ejecución necesita trabajo.</p>
+                        </div>
+                    </li>
+                    <li class="positive-item">
+                        <span class="problem-number">✓</span>
+                        <div class="problem-content">
+                            <h4>Información de contacto presente</h4>
+                            <p>Datos básicos de contacto visibles. Fundación para expandir.</p>
+                        </div>
+                    </li>
+                    <li class="positive-item">
+                        <span class="problem-number">✓</span>
+                        <div class="problem-content">
+                            <h4>Links a redes sociales</h4>
+                            <p>Presencia en redes sociales existente. Puede mejorarse y sincronizarse mejor.</p>
+                        </div>
+                    </li>
+                    <li class="positive-item">
+                        <span class="problem-number">✓</span>
+                        <div class="problem-content">
+                            <h4>Montos de cobertura específicos</h4>
+                            <p>Gs. 20M, Gs. 200-300M — números powerful si se presentan bien. Generan confianza con specificity.</p>
+                        </div>
+                    </li>
+                    <li class="positive-item">
+                        <span class="problem-number">✓</span>
+                        <div class="problem-content">
+                            <h4>Portal de autoservicio existente</h4>
+                            <p>self.lawmedicine.com.py — infraestructura de portal de clientes ya está desarrollada.</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="callout callout-success" style="margin-top: 32px;">
+                    <div class="callout-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <div class="callout-content">
+                        <h4>Conclusión: Base sólida para reconstruir</h4>
+                        <p>Los activos existentes son un buen punto de partida. El problema no es la base, sino la ejecución y el diseño. Una reestructuración total con los mismos datos sería transformadora.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Problemas Visuales -->
+            <section id="seccion4">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">4. Problemas Visuales Concretos</h2>
+                        <p class="section-subtitle">Issues de diseño UI identificados</p>
+                    </div>
+                </div>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>Navbar Problemas</h4>
+                        <p>Usa navbar-inverse (negro sobre negro) — genérico y sin personalidad. Sin color de acento definido.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Logo con Fondo Oscuro</h4>
+                        <p>"logolawsinfondo2.png" — el logo tiene fondo oscuro que no se integra con la mayoría de fondos.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Tipografía Sin Jerarquía</h4>
+                        <p>Usa Helvetica/Arial por defecto de Bootstrap. Sin jerarquía visual clara entre títulos y cuerpo.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Carousel Excesivo</h4>
+                        <p>El carousel ocupa demasiado viewport. Los slides 2 y 3 no tienen CTAs claras.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Layout "Sobre Nosotros" 2008</h4>
+                        <p>Imagen + texto en columnas es un patrón de hace 15 años. No comunica современный brand.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Grid de 4 Columnas Denso</h4>
+                        <p>Misión/Compromisos/Objetivos/Valores en 4 columnas es demasiado denso para móvil.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Footer Inconsistente</h4>
+                        <p>Tonos oscuros variados sin cohesión. Mezcla de negros que no constituyen un sistema.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Iconos FA 4.5 Obsoletos</h4>
+                        <p>Font Awesome 4.5.0 tiene iconos feos por standards actuales. La versión actual es 6.x.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Look de Template</h4>
+                        <p>Estética ThemeForest de $15. El usuario identifica immediately que es un template genérico.</p>
+                    </div>
+                </div>
+
+                <div class="callout callout-warning" style="margin-top: 24px;">
+                    <div class="callout-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                    </div>
+                    <div class="callout-content">
+                        <h4>Impacto en Percepción</h4>
+                        <p>Cada uno de estos problemas contribuye a una impresión de empresa outdated. La suma de detalles genera desconfianza before el usuario lee una sola palabra.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Problemas de UX -->
+            <section id="seccion5">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--warning), #C05621);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">5. Problemas de UX y Estructura</h2>
+                        <p class="section-subtitle">Flujo de usuario y arquitectura de información</p>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Problemas de Navegación</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>Solo 4 items en menú: Inicio, Nuestros Servicios, Contactenos, Ingresar</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>"Contactenos" vs "contacto.html" — inconsistencia de acento</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>"Ingresar" en nav principal debería ser secondary</span>
+                            </li>
+                        </ul>
+
+                        <h3 style="font-size: 1.1rem; margin: 24px 0 16px;">Problemas de Flujo</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>Usuario llega al carousel sin saber qué es L&M hasta slide 2</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>Slides repiten misma información de forma diferente</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>Slide 3 confunde más que clarifica</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Problemas de Arquitectura</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>"SOBRE NOSOTROS" explica qué hacen, no quiénes son</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>"QUE HACEMOS" es redundante con "SOBRE NOSOTROS"</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>Sin página de precios/planes visible</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>Sin blog ni recursos</span>
+                            </li>
+                        </ul>
+
+                        <h3 style="font-size: 1.1rem; margin: 24px 0 16px;">Problemas Móvil</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>Bootstrap 3 es "responsive" no "mobile-first"</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>Cards apilan pero párrafos demasiado largos</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                <span>Navbar toggle genérico de Bootstrap</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Problemas de Copy -->
+            <section id="seccion6">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #805AD5, #6B46C1);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                            <path d="M2 2l7.586 7.586"/>
+                            <circle cx="11" cy="11" r="2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">6. Problemas de Copy y Mensaje</h2>
+                        <p class="section-subtitle">Lenguaje, tono y contenido textual</p>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Hero Headline</h3>
+                <div class="card" style="margin-bottom: 24px;">
+                    <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;">"Protegiendo a los profesionales de blanco"</p>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">— Concepto OK, ejecución débil</p>
+                    <ul style="color: var(--text-secondary); padding-left: 20px;">
+                        <li>"Profesionales de blanco" no es lo que buscan los usuarios</li>
+                        <li>Sin diferenciación de competidores</li>
+                        <li>No genera urgencia ni conexión emocional</li>
+                    </ul>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Problemas de Subtítulos</h3>
+                <div class="card" style="margin-bottom: 24px;">
+                    <p style="font-size: 1rem; margin-bottom: 8px;">"Nuestra empresa se dedica a defender"</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Suena a Wikipedia, no a marketing profesional. Tres sustantivos seguidos: "derechos, su libertad y su patrimonio".</p>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Errores Encontrados</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Error</th>
+                                <th>Ubicación</th>
+                                <th>Corrección</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="severity-high">"JURIDICO" sin tilde</td>
+                                <td>Múltiples secciones</td>
+                                <td class="mono">"JURÍDICO"</td>
+                            </tr>
+                            <tr>
+                                <td class="severity-high">"ASESORAMIENTO JURIDICO" en mayúsculas</td>
+                                <td>Servicio</td>
+                                <td class="mono">"Asesoramiento jurídico"</td>
+                            </tr>
+                            <tr>
+                                <td class="severity-medium">"Contactenos" vs "contacto.html"</td>
+                                <td>Nav + archivo</td>
+                                <td class="mono">"Contáctenos" + "contacto.html"</td>
+                            </tr>
+                            <tr>
+                                <td class="severity-medium">Mayúsculas excesivas</td>
+                                <td>Todo el sitio</td>
+                                <td>Solo inicial en títulos</td>
+                            </tr>
+                            <tr>
+                                <td class="severity-low">"15 de Mayo"</td>
+                                <td>Where applicable</td>
+                                <td class="mono">"15 de mayo"</td>
+                            </tr>
+                            <tr>
+                                <td class="severity-high">"BENEFICIARIO" en caps</td>
+                                <td>Forms y copy</td>
+                                <td>"Cliente" o "profesional"</td>
+                            </tr>
+                            <tr>
+                                <td class="severity-medium">Slide 3 confunde</td>
+                                <td>Carousel</td>
+                                <td> "¿Gastos para defensa" parece que el cliente paga</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Cards de Características</h3>
+                <div class="card-grid" style="margin-top: 16px;">
+                    <div class="card">
+                        <h4 style="color: var(--danger);">"100% Responsabilidad"</h4>
+                        <p>Título vago. ¿Responsabilidad de qué? ¿Para quién? No comunica nada específico.</p>
+                    </div>
+                    <div class="card">
+                        <h4 style="color: var(--danger);">"Compromiso profesional y humano"</h4>
+                        <p>Cualquier empresa podría decir esto. Cero diferenciación competitiva.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: Confianza y Conversión -->
+            <section id="seccion7">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--danger), #C53030);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">7. Problemas de Confianza y Conversión</h2>
+                        <p class="section-subtitle">Elementos ausentes que generan desconfianza</p>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 16px; color: var(--danger);">Elementos Absentes ❌</h3>
+                        <ul class="feature-list" style="color: var(--text-secondary);">
+                            <li style="text-decoration: line-through;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Testimonios de clientes
+                            </li>
+                            <li style="text-decoration: line-through;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Casos de estudio
+                            </li>
+                            <li style="text-decoration: line-through;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Logotipos de clientes/instituciones
+                            </li>
+                            <li style="text-decoration: line-through;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Números de registro de abogados
+                            </li>
+                            <li style="text-decoration: line-through;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Certificaciones/alianzas
+                            </li>
+                            <li style="text-decoration: line-through;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Años de experiencia
+                            </li>
+                            <li style="text-decoration: line-through;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                FAQ
+                            </li>
+                            <li style="text-decoration: line-through;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Garantías
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 16px; color: var(--danger);">CTAs en Homepage ❌</h3>
+                        <div class="card" style="background: rgba(229,62,62,0.05); border-color: rgba(229,62,62,0.2);">
+                            <p style="font-weight: 600; margin-bottom: 12px;">No existe UN SOLO CTA en toda la homepage</p>
+                            <ul style="color: var(--text-secondary); padding-left: 20px; font-size: 0.9rem;">
+                                <li>No "Solicitar cotización"</li>
+                                <li>No "Contratar ahora"</li>
+                                <li>No "Hablar con un asesor"</li>
+                                <li>No WhatsApp flotante</li>
+                            </ul>
+                        </div>
+
+                        <div class="callout callout-danger" style="margin-top: 24px;">
+                            <div class="callout-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                            </div>
+                            <div class="callout-content">
+                                <h4>Sin precios = Sin conversión</h4>
+                                <p>Sección de precios completamente ausente. El usuario debe imaginar el costo y no tiene razón para actuar ahora.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="callout callout-warning" style="margin-top: 24px;">
+                    <div class="callout-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="callout-content">
+                        <h4>No hay urgencia, escasez ni razón para actuar ahora</h4>
+                        <p>Elementos psicológicos de conversión completamente ausentes. El sitio no motivation al usuario a tomar acción.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 8: Nuevo Estilo Visual -->
+            <section id="seccion8">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--primary), var(--primary-light));">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">8. Estilo Visual Nuevo Recomendado</h2>
+                        <p class="section-subtitle">Minimalismo institucional premium</p>
+                    </div>
+                </div>
+
+                <div class="callout callout-info">
+                    <div class="callout-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                    </div>
+                    <div class="callout-content">
+                        <h4>Dirección: Minimalismo Institucional Premium</h4>
+                        <p>Inspiración: Lloyd's of London + Lemonade (insurtech) + Cuatrecasas (bufete premium)</p>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin: 24px 0 16px;">Paleta de Colores</h3>
+                <div class="color-grid">
+                    <div class="color-swatch">
+                        <div class="swatch-box" style="background: #1A365D;"></div>
+                        <div class="swatch-label">Primary</div>
+                        <div class="swatch-hex">#1A365D</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-box" style="background: #2B6CB0;"></div>
+                        <div class="swatch-label">Secondary</div>
+                        <div class="swatch-hex">#2B6CB0</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-box" style="background: #D69E2E;"></div>
+                        <div class="swatch-label">Accent</div>
+                        <div class="swatch-hex">#D69E2E</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-box" style="background: #FFFFFF; border: 1px solid #E2E8F0;"></div>
+                        <div class="swatch-label">Background 1</div>
+                        <div class="swatch-hex">#FFFFFF</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-box" style="background: #F7FAFC;"></div>
+                        <div class="swatch-label">Background 2</div>
+                        <div class="swatch-hex">#F7FAFC</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-box" style="background: #2D3748;"></div>
+                        <div class="swatch-label">Text Primary</div>
+                        <div class="swatch-hex">#2D3748</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-box" style="background: #718096;"></div>
+                        <div class="swatch-label">Text Secondary</div>
+                        <div class="swatch-hex">#718096</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-box" style="background: #25D366;"></div>
+                        <div class="swatch-label">WhatsApp</div>
+                        <div class="swatch-hex">#25D366</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin: 32px 0 16px;">Sistema Tipográfico</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Elemento</th>
+                                <th>Tipografía</th>
+                                <th>Tamaño</th>
+                                <th>Peso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>H1, H2</td>
+                                <td>Playfair Display, Georgia, serif</td>
+                                <td class="mono">2rem - 3.5rem</td>
+                                <td>600-700</td>
+                            </tr>
+                            <tr>
+                                <td>H3, H4</td>
+                                <td>Inter, system-ui, sans-serif</td>
+                                <td class="mono">1.25rem - 1.5rem</td>
+                                <td>600</td>
+                            </tr>
+                            <tr>
+                                <td>Body</td>
+                                <td>Inter, system-ui, sans-serif</td>
+                                <td class="mono">1rem (16px)</td>
+                                <td>400</td>
+                            </tr>
+                            <tr>
+                                <td>Números</td>
+                                <td>JetBrains Mono, monospace</td>
+                                <td class="mono">según contexto</td>
+                                <td>500</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin: 24px 0 16px;">Espaciado</h3>
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>Entre Secciones</h4>
+                        <p>Mínimo 80px entre secciones principales para respirar y crear jerarquía visual.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Ancho de Línea</h4>
+                        <p>Máximo 60-70 caracteres por línea para legibilidad óptima. No más de 800px en contenedor.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 9: Estructura Nueva -->
+            <section id="seccion9">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--success), #2F855A);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"/>
+                            <line x1="8" y1="12" x2="21" y2="12"/>
+                            <line x1="8" y1="18" x2="21" y2="18"/>
+                            <line x1="3" y1="6" x2="3.01" y2="6"/>
+                            <line x1="3" y1="12" x2="3.01" y2="12"/>
+                            <line x1="3" y1="18" x2="3.01" y2="18"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">9. Estructura Nueva de la Home Ideal</h2>
+                        <p class="section-subtitle">Orden recomendado de secciones</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="structure-item">
+                        <div class="structure-number">1</div>
+                        <div class="structure-content">
+                            <h4>Hero</h4>
+                            <p>Propuesta de valor + CTA principal claro</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">2</div>
+                        <div class="structure-content">
+                            <h4>Trust Bar</h4>
+                            <p>Números + credenciales (experiencia, clientes, cobertura)</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">3</div>
+                        <div class="structure-content">
+                            <h4>Problema/Solución</h4>
+                            <p>Conexión emocional con estadísticas reales</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">4</div>
+                        <div class="structure-content">
+                            <h4>Servicios (resumen)</h4>
+                            <p>Qué cubre exactamente el servicio</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">5</div>
+                        <div class="structure-content">
+                            <h4>Planes/Precios</h4>
+                            <p>Opciones claras con precios transparentes</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">6</div>
+                        <div class="structure-content">
+                            <h4>Diferenciales</h4>
+                            <p>Por qué elegirnos vs la competencia</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">7</div>
+                        <div class="structure-content">
+                            <h4>Testimonios</h4>
+                            <p>Prueba social con casos reales</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">8</div>
+                        <div class="structure-content">
+                            <h4>Sobre Nosotros (resumen)</h4>
+                            <p>Quiénes somos sin walls de texto</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">9</div>
+                        <div class="structure-content">
+                            <h4>FAQ</h4>
+                            <p>Preguntas comunes que cubren objeciones</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">10</div>
+                        <div class="structure-content">
+                            <h4>CTA Final</h4>
+                            <p>Última oportunidad de conversión</p>
+                        </div>
+                    </div>
+                    <div class="structure-item">
+                        <div class="structure-number">11</div>
+                        <div class="structure-content">
+                            <h4>Footer</h4>
+                            <p>Contacto + legal + redes sociales</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 10: Secciones a Agregar -->
+            <section id="seccion10">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--success), #2F855A);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="16"/>
+                            <line x1="8" y1="12" x2="16" y2="12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">10. Secciones Nuevas a Agregar</h2>
+                        <p class="section-subtitle">Elementos que actualmente faltan y son críticos</p>
+                    </div>
+                </div>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--primary);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <h4>Trust Bar</h4>
+                        <p><strong>500+ profesionales protegidos</strong> · <strong>12 años de experiencia</strong> · <strong>Gs. 300M cobertura</strong> · <strong>24/7 soporte</strong></p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--warning);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <h4>Sección Problema/Solución</h4>
+                        <p>Conexión emocional con estadísticas reales del sector médico legal en Paraguay.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--primary-light);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="3" y1="9" x2="21" y2="9"/>
+                                <line x1="9" y1="21" x2="9" y2="9"/>
+                            </svg>
+                        </div>
+                        <h4>Cobertura Detallada (6 cards)</h4>
+                        <p>Penal · Civil · Administrativo · Laboral · Extrajudicial · Difamación</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--accent);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="1" x2="12" y2="23"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                        <h4>Planes (3 cards)</h4>
+                        <p>Basic · Integral (recomendado) · Premium — con precios claros y features por tier</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--success);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h4>Testimonios Reales</h4>
+                        <p>Foto + nombre + especialidad + ciudad + resultado específico logrado</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="background: #805AD5;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <h4>FAQ</h4>
+                        <p>6-8 preguntas cubriendo las objeciones más comunes deprospects</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="background: var(--primary);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <h4>About Humanizado</h4>
+                        <p>Foto del fundador + credenciales + mensaje personal. Conectar humanamente.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 11: Secciones a Eliminar -->
+            <section id="seccion11">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--danger), #C53030);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            <line x1="10" y1="11" x2="10" y2="17"/>
+                            <line x1="14" y1="11" x2="14" y2="17"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">11. Secciones a Eliminar o Fusionar</h2>
+                        <p class="section-subtitle">Elementos que deben removerse o rediseñarse</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Elemento Actual</th>
+                                <th>Acción</th>
+                                <th>Razón</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Carousel (3 slides)</td>
+                                <td><span class="badge badge-danger">ELIMINAR</span></td>
+                                <td>Reemplazar con Hero estático con CTA claro</td>
+                            </tr>
+                            <tr>
+                                <td>Features (3 icon blocks)</td>
+                                <td><span class="badge badge-warning">FUSIONAR</span></td>
+                                <td>Integrar en Trust Bar + Diferenciales</td>
+                            </tr>
+                            <tr>
+                                <td>About (image + text wall)</td>
+                                <td><span class="badge badge-warning">REDISEÑAR</span></td>
+                                <td>Crear About humanizado con founder</td>
+                            </tr>
+                            <tr>
+                                <td>Process (4 columns)</td>
+                                <td><span class="badge badge-danger">ELIMINAR</span></td>
+                                <td>Misión/Compromisos/Objetivos/Valores redundante</td>
+                            </tr>
+                            <tr>
+                                <td>Bottom-footer credit</td>
+                                <td><span class="badge badge-danger">ELIMINAR</span></td>
+                                <td>"Developed by..." = amateurismo</td>
+                            </tr>
+                            <tr>
+                                <td>Top header with contacts</td>
+                                <td><span class="badge badge-warning">REDISEÑAR</span></td>
+                                <td>Más limpio, WhatsApp prominente</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 12: Propuesta de Copy -->
+            <section id="seccion12">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #805AD5, #6B46C1);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">12. Propuesta de Nuevo Enfoque de Copy</h2>
+                        <p class="section-subtitle">Guidelines de tono y contenido</p>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Nuevas Headlines Recomendadas</h3>
+                <div class="card-grid" style="margin-bottom: 32px;">
+                    <div class="card" style="border-left: 4px solid var(--accent);">
+                        <h4>Headline Principal</h4>
+                        <p style="font-size: 1.2rem; font-weight: 600; color: var(--primary);">"Tu carrera médica, protegida. Siempre."</p>
+                    </div>
+                    <div class="card" style="border-left: 4px solid var(--primary-light);">
+                        <h4>Subtitle</h4>
+                        <p style="font-size: 1rem; color: var(--text-secondary);">"Cobertura integral, costos predecibles y un equipo de abogados especializados en medicina legal."</p>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Sección de Problema</h3>
+                <div class="card" style="margin-bottom: 32px; background: rgba(229,62,62,0.05); border-color: rgba(229,62,62,0.2);">
+                    <p style="font-size: 1.1rem; font-weight: 500;">"¿Sabías que el <strong>35%</strong> de los médicos en Paraguay enfrentan al menos una denuncia en su carrera?"</p>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Guía de Voz y Tono</h3>
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>❌ Antes (Incorrecto)</h4>
+                        <ul style="color: var(--danger); padding-left: 20px; font-size: 0.9rem;">
+                            <li>Profesional BUT inaccessible</li>
+                            <li>"BENEFICIARIO" (jerga legal)</li>
+                            <li>TODOS EN MAYÚSCULAS</li>
+                            <li>Párrafos de 3 líneas</li>
+                            <li>"Nuestra empresa se dedica a..."</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>✓ Después (Correcto)</h4>
+                        <ul style="color: var(--success); padding-left: 20px; font-size: 0.9rem;">
+                            <li>Profesional PERO cercano</li>
+                            <li>"Vos/tú" no "beneficiario"</li>
+                            <li>Solo mayúscula en títulos</li>
+                            <li>One-liners claros</li>
+                            <li>"Te protegemos cuando..."</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin: 24px 0 16px;">Ejemplo de Copy de Cobertura</h3>
+                <div class="callout callout-success">
+                    <div class="callout-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <div class="callout-content">
+                        <h4>Cobertura Clara</h4>
+                        <p>"Si un tribunal te condena a pagar daños, cubrimos hasta <strong>Gs. 300 millones</strong>. Sin sorpresas."</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 13: Dirección de Marca -->
+            <section id="seccion13">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--accent), #B7791F);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">13. Propuesta de Dirección de Marca</h2>
+                        <p class="section-subtitle">Posicionamiento y personalidad de marca</p>
+                    </div>
+                </div>
+
+                <div class="two-col" style="margin-bottom: 32px;">
+                    <div>
+                        <h3 style="font-size: 1rem; color: var(--danger); margin-bottom: 12px;">Estado Actual</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Bufete legal genérico
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Mediano, local, anticuado
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Marketing de los años 2000
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Sin personalidad distintiva
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 1rem; color: var(--success); margin-bottom: 12px;">Estado Objetivo</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                "Institución moderna de protección legal médica"
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                El "Safehouse" de profesionales de salud en Paraguay
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Tecnología moderna, branding premium
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Identidad clara: protección + confianza
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Personalidad de Marca</h3>
+                <div class="card-grid">
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <h4>Profesional</h4>
+                        <p>Expertise legal verificable, credenciales claras, años de experiencia visibles.</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--primary-light);">
+                        <h4>Cercano</h4>
+                        <p>Sin jerga innecesaria, "tú/vos" no "usted", accesible pero no informal.</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--accent);">
+                        <h4>Transparente</h4>
+                        <p>"Sin letra pequeña", precios claros, términos comprensibles.</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--success);">
+                        <h4>Confiado</h4>
+                        <p>Confianza sin arrogancia. Sabemos lo que hacemos, lo demostramos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 14: Sitemap -->
+            <section id="seccion14">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--primary), var(--primary-light));">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">14. Sitemap Propuesto</h2>
+                        <p class="section-subtitle">Estructura de sitio recomendada</p>
+                    </div>
+                </div>
+
+                <div class="sitemap">
+                    <div style="margin-bottom: 16px;">
+                        <span class="sitemap-folder">lawmedicine.com.py/</span>
+                    </div>
+                    <div style="margin-left: 24px; margin-bottom: 8px;">
+                        <span class="sitemap-file">index.html</span> <span style="color: var(--text-light);">— Home</span>
+                    </div>
+                    <div style="margin-left: 24px; margin-bottom: 8px;">
+                        <span class="sitemap-file">servicios.html</span> <span style="color: var(--text-light);">— Detalle de servicios</span>
+                    </div>
+                    <div style="margin-left: 24px; margin-bottom: 8px;">
+                        <span class="sitemap-file">planes.html</span> <span style="color: var(--text-light);">— Precios y planes</span>
+                    </div>
+                    <div style="margin-left: 24px; margin-bottom: 8px;">
+                        <span class="sitemap-file">sobre-nosotros.html</span> <span style="color: var(--text-light);">— About + equipo</span>
+                    </div>
+                    <div style="margin-left: 24px; margin-bottom: 8px;">
+                        <span class="sitemap-file">testimonios.html</span> <span style="color: var(--text-light);">— Casos de éxito</span>
+                    </div>
+                    <div style="margin-left: 24px; margin-bottom: 8px;">
+                        <span class="sitemap-folder">recursos.html</span> <span style="color: var(--text-light);">— Blog</span>
+                    </div>
+                    <div style="margin-left: 48px; margin-bottom: 8px;">
+                        <span class="sitemap-file">/como-evitar-demandas-como-medico</span>
+                    </div>
+                    <div style="margin-left: 48px; margin-bottom: 8px;">
+                        <span class="sitemap-file">/que-cubre-tu-seguro-de-mala-praxis</span>
+                    </div>
+                    <div style="margin-left: 48px; margin-bottom: 8px;">
+                        <span class="sitemap-file">/pasos-si-te-denuncian</span>
+                    </div>
+                    <div style="margin-left: 24px; margin-bottom: 8px;">
+                        <span class="sitemap-file">contacto.html</span> <span style="color: var(--text-light);">— Formulario + info</span>
+                    </div>
+                    <div style="margin-left: 24px; margin-bottom: 8px;">
+                        <span class="sitemap-folder">portal/</span> <span style="color: var(--text-light);">— self.lawmedicine.com.py</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 15: Wireframe -->
+            <section id="seccion15">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--success), #2F855A);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="9" y1="21" x2="9" y2="9"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">15. Wireframe Textual de la Home</h2>
+                        <p class="section-subtitle">Estructura visual de la homepage propuesta</p>
+                    </div>
+                </div>
+
+                <pre class="wireframe">╔══════════════════════════════════════════════════════════════════╗
+║  NAVBAR: Logo | Servicios | Planes | Nosotros | Testimonios    ║
+║                        [Ingresar al Portal]  [WhatsApp]         ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   ┌─────────────────────────────────────────────────────────┐   ║
+║   │                                                         │   ║
+║   │     "Tu carrera médica, protegida. Siempre."            │   ║
+║   │                                                         │   ║
+║   │     Cobertura integral, costos predecibles y un         │   ║
+║   │     equipo de abogados especializados...                 │   ║
+║   │                                                         │   ║
+║   │     [Contratar Ahora - GOLD]  [Conocer Planes]         │   ║
+║   │                                                         │   ║
+║   └─────────────────────────────────────────────────────────┘   ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐       ║
+║   │   500+   │  │   12     │  │  Gs.300M │  │   24/7   │       ║
+║   │Profesion.│  │  Años    │  │ Cobertura│  │ Soporte  │       ║
+║   └──────────┘  └──────────┘  └──────────┘  └──────────┘       ║
+║                      TRUST BAR (stats)                          ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   ┌─────────────────────────────────────────────────────────┐   ║
+║   │         "¿Sabías que el 35% de los médicos..."          │   ║
+║   │                                                         │   ║
+║   │   [Ilustración: Profesional médico + Escudo]            │   ║
+║   └─────────────────────────────────────────────────────────┘   ║
+║                      PROBLEMA / SOLUCIÓN                        ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   SERVICIOS (6 cards en grid 3x2)                                ║
+║   ┌────────────┐  ┌────────────┐  ┌────────────┐                ║
+║   │   PENAL    │  │   CIVIL    │  │ADMINISTRTV.│                ║
+║   │    🛡️      │  │    🛡️      │  │     🛡️     │                ║
+║   └────────────┘  └────────────┘  └────────────┘                ║
+║   ┌────────────┐  ┌────────────┐  ┌────────────┐                ║
+║   │  LABORAL   │  │EXTRAJUDICI.│  │ DIFAMACIÓN │                ║
+║   │    🛡️      │  │     🛡️      │  │     🛡️     │                ║
+║   └────────────┘  └────────────┘  └────────────┘                ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   PLANES (3 cards, "Integral" destacada)                          ║
+║   ┌────────────┐  ┌────────────────┐  ┌────────────┐            ║
+║   │   BASIC    │  │    INTEGRAL    │  │  PREMIUM   │            ║
+║   │  Gs. XXX   │  │  Gs. XXX ★     │  │  Gs. XXX   │            ║
+║   │            │  │   RECOMENDADO  │  │            │            ║
+║   └────────────┘  └────────────────┘  └────────────┘            ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   DIFERENCIALES (4 columnas con iconos)                          ║
+║   ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐       ║
+║   │ Especial │  │Cobertura │  │  Team    │  │ Respuesta │       ║
+║   │   idad   │  │   Alta   │  │ Dedicado │  │   Rápida  │       ║
+║   └──────────┘  └──────────┘  └──────────┘  └──────────┘       ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   TESTIMONIOS (carousel o grid de cards)                         ║
+║   ┌───────────────────────────────────────────────────────┐     ║
+║   │ [Foto] "Dr. Juan Pérez - Cardiólogo - Asunción"      │     ║
+║   │ "Gracias a L&M resolví mi caso en 3 meses..."        │     ║
+║   └───────────────────────────────────────────────────────┘     ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   SOBRE NOSOTROS (humano, no wall of text)                        ║
+║   ┌──────────────────┐  ┌───────────────────────────────┐      ║
+║   │   [Foto Founder]  │  │  "Nuestra misión es..."      │      ║
+║   │   Dr. Nombre      │  │  [Stats del equipo]           │      ║
+║   │   Fundador       │  │  [CTA: Conocer más]          │      ║
+║   └──────────────────┘  └───────────────────────────────┘      ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   FAQ (acordeón, 6-8 preguntas)                                  ║
+║   ┌───────────────────────────────────────────────────────┐     ║
+║   │ ▼ ¿Cuánto cuesta el servicio?                        │     ║
+║   │ ▶ ¿Qué cubre exactamente?                            │     ║
+║   │ ▶ ¿Cómo funciona el proceso de defensa?              │     ║
+║   │ ▶ ¿Qué pasa si me demandan?                         │     ║
+║   └───────────────────────────────────────────────────────┘     ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   CTA FINAL                                                      ║
+║   ┌─────────────────────────────────────────────────────────┐   ║
+║   │     "¿Listo para proteger tu carrera?"                 │   ║
+║   │     [Contratar Ahora - GOLD]  [Hablar por WhatsApp]     │   ║
+║   └─────────────────────────────────────────────────────────┘   ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║   FOOTER                                                         ║
+║   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          ║
+║   │  Contacto    │  │   Legal       │  │   Social     │          ║
+║   │  Teléfono    │  │  Privacidad   │  │  Facebook    │          ║
+║   │  Email       │  │  Términos     │  │  LinkedIn    │          ║
+║   │  WhatsApp    │  │               │  │              │          ║
+║   └──────────────┘  └──────────────┘  └──────────────┘          ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝</pre>
+            </section>
+
+            <!-- Section 16: Referencias -->
+            <section id="seccion16">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--primary), var(--primary-light));">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">16. Referencias de Estilo</h2>
+                        <p class="section-subtitle">Sitios web de referencia para el redesign</p>
+                    </div>
+                </div>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div class="card-icon" style="background: #00D924; margin: 0;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                    <polyline points="9 22 9 12 15 12 15 22"/>
+                                </svg>
+                            </div>
+                            <h4 style="margin: 0;">Lemonade</h4>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">lemonade.com</p>
+                        <p style="margin-top: 12px;">Clean, trust-building, transparent pricing, clear CTAs. Perfecto para mostrar cómo una insurtech presenta precios y genera confianza.</p>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div class="card-icon" style="background: #1A365D; margin: 0;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                            </div>
+                            <h4 style="margin: 0;">Cuatrecasas</h4>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">cuatrecasas.com</p>
+                        <p style="margin-top: 12px;">Corporate elegance, perfect visual hierarchy, serif typography. Referencia de bufete legal premium.</p>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #667eea, #764ba2); margin: 0;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                                    <polyline points="2 17 12 22 22 17"/>
+                                    <polyline points="2 12 12 17 22 12"/>
+                                </svg>
+                            </div>
+                            <h4 style="margin: 0;">Estilo Legal Tech</h4>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Hybrid approach</p>
+                        <p style="margin-top: 12px;">Protection feel, strong contrasts, "expert in your corner" sensation. Combina confianza legal con modernidad tech.</p>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin: 32px 0 16px;">Elementos Clave a Adoptar</h3>
+                <div class="two-col">
+                    <div>
+                        <h4 style="font-size: 0.95rem; margin-bottom: 12px;">De Lemonade:</h4>
+                        <ul class="feature-list">
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Pricing transparente en cards</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> CTAs claros y repetidos</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Proceso visual paso a paso</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Testimonios con resultados</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.95rem; margin-bottom: 12px;">De Cuatrecasas:</h4>
+                        <ul class="feature-list">
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Tipografía serif premium</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Espaciado generoso</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Jerarquía visual clara</li>
+                            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Contenido scannable</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 17: Conclusión -->
+            <section id="seccion17">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--accent), #B7791F);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title">17. Conclusión Final</h2>
+                        <p class="section-subtitle">Comparativa y recomendación estratégica</p>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; margin-bottom: 24px;">Tabla Comparativa: Actual vs Nuevo</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dimension</th>
+                                <th>Sitio Actual</th>
+                                <th>Sitio Nuevo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Primera Impresión</strong></td>
+                                <td class="severity-high">Template genérico 2015</td>
+                                <td class="severity-low">Institución premium moderna</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tecnología</strong></td>
+                                <td class="severity-high">Bootstrap 3, jQuery 3</td>
+                                <td class="severity-low">Stack moderno (React/Next o Vue)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Propuesta de Valor</strong></td>
+                                <td class="severity-high">Vaga, en carousel</td>
+                                <td class="severity-low">Clara en Hero + Trust Bar</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Planes/Precios</strong></td>
+                                <td class="severity-high">Ausente</td>
+                                <td class="severity-low">3 tiers con precios claros</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Confianza/Prueba Social</strong></td>
+                                <td class="severity-high">Cero</td>
+                                <td class="severity-low">Testimonios, stats, credenciales</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conversión</strong></td>
+                                <td class="severity-high">Sin CTAs</td>
+                                <td class="severity-low">Múltiples CTAs + WhatsApp</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SEO</strong></td>
+                                <td class="severity-high">Title tag inútil</td>
+                                <td class="severity-low">Optimizado + schema markup</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Móvil</strong></td>
+                                <td class="severity-medium">Responsive no mobile-first</td>
+                                <td class="severity-low">Mobile-first, touch-friendly</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Copy</strong></td>
+                                <td class="severity-high">Jerga, errores, mayúsculas</td>
+                                <td class="severity-low">Profesional pero cercano</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Diferenciación</strong></td>
+                                <td class="severity-high">Ninguna</td>
+                                <td class="severity-low">Posicionamiento claro de marca</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="conclusion-box" style="margin-top: 48px;">
+                    <h2>Veredicto Final</h2>
+                    <p>El sitio actual es una tarjeta de presentación digitalizada. El nuevo sitio es una máquina de generación de clientes calificados.</p>
+                    <div class="conclusion-quote">
+                        "No es solo un redesign. Es una transformación estratégica de un costo operativo a un activo de generación de negocio."
+                    </div>
+                </div>
+            </section>
+
+            <!-- Versión Recomendada para Reescribirla -->
+            <section style="background: linear-gradient(135deg, var(--primary) 0%, #234E82 100%); color: white;">
+                <div class="section-header" style="border-bottom-color: rgba(255,255,255,0.2);">
+                    <div class="section-icon" style="background: var(--accent);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="section-title" style="color: white;">Versión Recomendada para Reescribirla</h2>
+                        <p class="section-subtitle" style="color: rgba(255,255,255,0.7);">Style Guide completo para el nuevo sitio</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin-top: 32px;">
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 24px;">
+                        <h4 style="color: var(--accent-light); margin-bottom: 16px; font-family: Inter, sans-serif;">Estilo</h4>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Minimalismo institucional premium — Lloyd's of London meets Lemonade meets Cuatrecasas</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 24px;">
+                        <h4 style="color: var(--accent-light); margin-bottom: 16px; font-family: Inter, sans-serif;">CTA Primario</h4>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">"Contratar Ahora" — Botón dorado (#D69E2E) con texto oscuro</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 24px;">
+                        <h4 style="color: var(--accent-light); margin-bottom: 16px; font-family: Inter, sans-serif;">CTA Secundario</h4>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">"Conocer Planes" — Outline azul primary</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 24px;">
+                        <h4 style="color: var(--success); margin-bottom: 16px; font-family: Inter, sans-serif;">WhatsApp Button</h4>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Flotante verde #25D366, siempre visible, esquina inferior derecha</p>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-light); margin: 32px 0 16px; font-family: Inter, sans-serif; font-weight: 600;">10 Formas de Elevar la Percepción de Marca</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>1.</strong> Tipografía serif en H1-H2</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>2.</strong> Espaciado generoso (80px+)</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>3.</strong> Números en mono font</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>4.</strong> Stats específicos (no vagos)</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>5.</strong> Testimonios con resultados</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>6.</strong> Founder photo + credentials</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>7.</strong> Precios transparentes</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>8.</strong> Copy sin jerga</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>9.</strong> Mobile-first design</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 16px; border-left: 3px solid var(--accent);">
+                        <p style="color: white; font-size: 0.9rem;"><strong>10.</strong> Animaciones sutiles</p>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-light); margin: 32px 0 16px; font-family: Inter, sans-serif; font-weight: 600;">Paleta Completa</h3>
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: #1A365D; border-radius: 8px; margin-bottom: 8px;"></div>
+                        <p style="color: white; font-size: 0.75rem;">Primary</p>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.7rem; font-family: monospace;">#1A365D</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: #2B6CB0; border-radius: 8px; margin-bottom: 8px;"></div>
+                        <p style="color: white; font-size: 0.75rem;">Secondary</p>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.7rem; font-family: monospace;">#2B6CB0</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: #D69E2E; border-radius: 8px; margin-bottom: 8px;"></div>
+                        <p style="color: white; font-size: 0.75rem;">Accent</p>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.7rem; font-family: monospace;">#D69E2E</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: #F7FAFC; border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.2);"></div>
+                        <p style="color: white; font-size: 0.75rem;">BG Gray</p>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.7rem; font-family: monospace;">#F7FAFC</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: #2D3748; border-radius: 8px; margin-bottom: 8px;"></div>
+                        <p style="color: white; font-size: 0.75rem;">Text</p>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.7rem; font-family: monospace;">#2D3748</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: #25D366; border-radius: 8px; margin-bottom: 8px;"></div>
+                        <p style="color: white; font-size: 0.75rem;">WhatsApp</p>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.7rem; font-family: monospace;">#25D366</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="report-footer">
+        <div class="container">
+            <p class="footer-brand">Law & Medicine</p>
+            <p class="footer-text">Auditoría Digital Completa — Abril 2026</p>
+            <p class="footer-text" style="margin-top: 16px; opacity: 0.6;">Documento preparado para presentación a stakeholders</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Active dot navigation
+        const sections = document.querySelectorAll('section[id]');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navDots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.dataset.section === current) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

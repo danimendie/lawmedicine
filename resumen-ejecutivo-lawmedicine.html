@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Ejecutivo - Law & Medicine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1A365D;
+            --secondary: #2B6CB0;
+            --accent: #D69E2E;
+            --bg-white: #FFFFFF;
+            --bg-ice: #F7FAFC;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --critical: #C53030;
+            --critical-bg: #FED7D7;
+            --warning: #C05621;
+            --warning-bg: #FEEBC8;
+            --good: #276749;
+            --good-bg: #C6F6D5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 10pt;
+            line-height: 1.5;
+            color: var(--text-dark);
+            background: var(--bg-white);
+        }
+
+        /* PRINT SETTINGS */
+        @page {
+            size: A4;
+            margin: 1.5cm 2cm;
+        }
+
+        @media print {
+            body {
+                font-size: 9pt;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .no-print {
+                display: none;
+            }
+            .container {
+                max-width: 100%;
+            }
+        }
+
+        /* LAYOUT */
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 26pt;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 11pt;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        p {
+            margin-bottom: 8px;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            padding: 30px 0 25px;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 16px;
+            font-size: 8pt;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .header h1 {
+            font-size: 28pt;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .header .subtitle {
+            font-size: 12pt;
+            color: var(--secondary);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .header .meta {
+            font-size: 9pt;
+            color: var(--text-light);
+        }
+
+        .header .company {
+            font-family: 'Playfair Display', serif;
+            font-size: 11pt;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        /* SECTIONS */
+        .section {
+            margin-bottom: 22px;
+        }
+
+        .verdict-box {
+            background: linear-gradient(135deg, var(--primary) 0%, #234876 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .verdict-box strong {
+            color: var(--accent);
+        }
+
+        /* PROBLEMS GRID */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .problem-card {
+            background: var(--bg-ice);
+            border-radius: 6px;
+            padding: 12px 15px;
+            border-left: 4px solid;
+        }
+
+        .problem-card.critical {
+            border-color: var(--critical);
+            background: var(--critical-bg);
+        }
+
+        .problem-card.warning {
+            border-color: var(--warning);
+            background: var(--warning-bg);
+        }
+
+        .problem-card h4 {
+            font-size: 9pt;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .problem-card.critical h4 {
+            color: var(--critical);
+        }
+
+        .problem-card.warning h4 {
+            color: var(--warning);
+        }
+
+        .marker {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .critical .marker {
+            background: var(--critical);
+        }
+
+        .warning .marker {
+            background: var(--warning);
+        }
+
+        .problem-card ul {
+            margin: 0;
+            padding-left: 16px;
+            font-size: 9pt;
+        }
+
+        .problem-card li {
+            margin-bottom: 3px;
+        }
+
+        /* OPPORTUNITIES */
+        .opportunities-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .opportunity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            background: var(--bg-ice);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .opportunity-item .number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14pt;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .opportunity-item p {
+            margin: 0;
+            font-size: 9.5pt;
+        }
+
+        .opportunity-item strong {
+            color: var(--primary);
+        }
+
+        /* VISUAL DIRECTION */
+        .palette-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 9pt;
+        }
+
+        .palette-table th {
+            background: var(--primary);
+            color: white;
+            padding: 8px 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .palette-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .palette-table tr:nth-child(even) {
+            background: var(--bg-ice);
+        }
+
+        .color-swatch {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid #CBD5E0;
+        }
+
+        .style-note {
+            background: linear-gradient(135deg, var(--bg-ice) 0%, #EDF2F7 100%);
+            padding: 15px 18px;
+            border-radius: 8px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .style-note p {
+            margin: 0;
+            font-size: 9.5pt;
+        }
+
+        .style-note em {
+            color: var(--accent);
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* NEW STRUCTURE */
+        .structure-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .structure-item {
+            background: var(--bg-ice);
+            padding: 10px 12px;
+            border-radius: 6px;
+            text-align: center;
+            border-top: 3px solid var(--secondary);
+        }
+
+        .structure-item .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12pt;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .structure-item p {
+            font-size: 8pt;
+            margin: 4px 0 0;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* CTA SECTION */
+        .cta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .cta-item {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid;
+        }
+
+        .cta-item.primary {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .cta-item.secondary {
+            background: white;
+            border-color: var(--primary);
+        }
+
+        .cta-item.floating {
+            background: var(--good);
+            border-color: var(--good);
+            color: white;
+        }
+
+        .cta-item .label {
+            font-size: 10pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-item.primary .label {
+            color: white;
+        }
+
+        .cta-item.secondary .label {
+            color: var(--primary);
+        }
+
+        .cta-item.floating .label {
+            color: white;
+        }
+
+        .cta-item .desc {
+            font-size: 8pt;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        .cta-item.primary .desc {
+            color: rgba(255,255,255,0.85);
+        }
+
+        .cta-item.secondary .desc {
+            color: var(--text-light);
+        }
+
+        .cta-item.floating .desc {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* COMPARISON TABLE */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 9px 12px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-ice);
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .comparison-table .old {
+            color: var(--critical);
+        }
+
+        .comparison-table .new {
+            color: var(--good);
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 2px solid var(--primary);
+            text-align: center;
+            font-size: 8pt;
+            color: var(--text-light);
+        }
+
+        /* PAGE BREAK */
+        .page-break {
+            margin: 20px 0;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .problems-grid,
+            .structure-grid,
+            .cta-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 22pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ========== PAGE 1 ========== -->
+        
+        <!-- HEADER -->
+        <header class="header">
+            <div class="badge">Documento Confidencial</div>
+            <h1>Resumen Ejecutivo</h1>
+            <p class="subtitle">Auditoría UX/UI & Estrategia Digital — Law & Medicine</p>
+            <p class="meta">Abril 2026</p>
+            <p class="company">lawmedicine.com.py</p>
+        </header>
+
+        <!-- 1. DIAGNÓSTICO GENERAL -->
+        <section class="section">
+            <h2>1. Diagnóstico General</h2>
+            <p>El sitio web actual es una plantilla Bootstrap de 2015 <strong>sin ninguna estrategia de conversión</strong>. Utiliza Bootstrap 3.3.1, jQuery 3.2.1 y Font Awesome 4.5.0 — tecnología de 2016-2017. <strong>No existen CTAs en toda la página de inicio.</strong> Sin precios, sin testimonios, sin señales de confianza.</p>
+            
+            <div class="verdict-box">
+                <h3 style="color: var(--accent); margin-bottom: 8px; border: none; padding: 0;">Veredicto</h3>
+                <p style="margin: 0; font-size: 10pt;">El sitio <strong>informa pero NO vende</strong>. Cada visita es una oportunidad perdida de conversión.</p>
+            </div>
+        </section>
+
+        <!-- 2. PRINCIPALES PROBLEMAS -->
+        <section class="section">
+            <h2>2. Principales Problemas Identificados</h2>
+            
+            <div class="problems-grid">
+                <div class="problem-card critical">
+                    <h4><span class="marker"></span> Problemas Críticos</h4>
+                    <ul>
+                        <li>Sin sección de precios/planes — el usuario no sabe qué comprar</li>
+                        <li>Cero CTAs en toda la homepage — sin camino de conversión</li>
+                        <li>Sin testimonios ni señales de confianza — sin prueba social</li>
+                        <li>Stack tecnológico con 8-10 años de antigüedad</li>
+                        <li>Crédito "Developed by Law&Medicine" visible en footer (amateur)</li>
+                    </ul>
+                </div>
+                
+                <div class="problem-card warning">
+                    <h4><span class="marker"></span> Alta Prioridad</h4>
+                    <ul>
+                        <li>Title tag sin valor SEO</li>
+                        <li>Sin meta description tag</li>
+                        <li>"juridico" mal escrito sin tilde</li>
+                        <li>Copy confusa sobre "gastos de defensa judicial"</li>
+                        <li>Sin WhatsApp (mercado WhatsApp-primary)</li>
+                        <li>Carousel sin CTAs en 2 de 3 slides</li>
+                        <li>Texto excesivo en mayúsculas</li>
+                        <li>Inconsistencia "Contactenos" vs "contacto.html"</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. OPORTUNIDADES -->
+        <section class="section">
+            <h2>3. Oportunidades Más Importantes</h2>
+            
+            <div class="opportunities-list">
+                <div class="opportunity-item">
+                    <span class="number">1</span>
+                    <p><strong>Dominio excelente</strong> — lawmedicine.com.py es memorable, profesional y directo al punto.</p>
+                </div>
+                <div class="opportunity-item">
+                    <span class="number">2</span>
+                    <p><strong>Diferenciadores poderosos</strong> — Montos específicos de cobertura (Gs. 20M, 200-300M) son únicos en el mercado.</p>
+                </div>
+                <div class="opportunity-item">
+                    <span class="number">3</span>
+                    <p><strong>Infraestructura madura</strong> — Portal self-servicio (self.lawmedicine.com.py) demuestra solidez operativa.</p>
+                </div>
+                <div class="opportunity-item">
+                    <span class="number">4</span>
+                    <p><strong> Oportunidad de mercado</strong> — No existe un líder claro en protección legal médica en Paraguay.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE BREAK -->
+        <div class="page-break"></div>
+
+        <!-- ========== PAGE 2 ========== -->
+
+        <!-- 4. DIRECCIÓN VISUAL -->
+        <section class="section">
+            <h2>4. Dirección Visual Recomendada</h2>
+            
+            <p style="font-weight: 600; color: var(--primary); margin-bottom: 10px;">Estilo: "Minimalismo Institucional Premium"</p>
+            
+            <div class="style-note" style="margin-bottom: 15px;">
+                <p>Referencia: <em>Lloyd's of London</em> + <em>Lemonade</em> + <em>Cuatrecasas</em></p>
+                <p style="font-size: 9pt; color: var(--text-light); margin-top: 6px;">Elegancia corporativa con accesibilidad digital moderna</p>
+            </div>
+
+            <h3 style="font-size: 10pt; margin-bottom: 8px;">Paleta de Colores</h3>
+            <table class="palette-table">
+                <thead>
+                    <tr>
+                        <th>Rol</th>
+                        <th>Color</th>
+                        <th>Hex</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Primary</td>
+                        <td><div class="color-swatch"><span class="swatch" style="background: #1A365D;"></span>Deep Corporate Blue</div></td>
+                        <td class="mono">#1A365D</td>
+                    </tr>
+                    <tr>
+                        <td>Secondary</td>
+                        <td><div class="color-swatch"><span class="swatch" style="background: #2B6CB0;"></span>Medical Blue</div></td>
+                        <td class="mono">#2B6CB0</td>
+                    </tr>
+                    <tr>
+                        <td>Accent</td>
+                        <td><div class="color-swatch"><span class="swatch" style="background: #D69E2E;"></span>Noble Gold</div></td>
+                        <td class="mono">#D69E2E</td>
+                    </tr>
+                    <tr>
+                        <td>Background</td>
+                        <td><div class="color-swatch"><span class="swatch" style="background: #FFFFFF;"></span><span class="swatch" style="background: #F7FAFC;"></span>White / Ice Gray</div></td>
+                        <td class="mono">#FFFFFF / #F7FAFC</td>
+                    </tr>
+                    <tr>
+                        <td>Text</td>
+                        <td><div class="color-swatch"><span class="swatch" style="background: #2D3748;"></span>Dark Gray</div></td>
+                        <td class="mono">#2D3748</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="font-size: 10pt; margin-bottom: 8px;">Tipografía</h3>
+            <table class="palette-table">
+                <thead>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>Fuente</th>
+                        <th>Estilo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Títulos</td>
+                        <td>Playfair Display</td>
+                        <td>Serif, elegante</td>
+                    </tr>
+                    <tr>
+                        <td>Cuerpo</td>
+                        <td>Inter</td>
+                        <td>Sans-serif, moderno</td>
+                    </tr>
+                    <tr>
+                        <td>Números</td>
+                        <td>JetBrains Mono</td>
+                        <td>Monospace para montos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 5. ESTRUCTURA NUEVA -->
+        <section class="section">
+            <h2>5. Estructura Nueva Recomendada</h2>
+            
+            <div class="structure-grid">
+                <div class="structure-item">
+                    <span class="num">1</span>
+                    <p>HERO — Propuesta de valor + CTA</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">2</span>
+                    <p>TRUST BAR — Números clave</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">3</span>
+                    <p>PROBLEMA/SOLUCIÓN — Conexión emocional</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">4</span>
+                    <p>COBERTURAS — 6 tarjetas visuales</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">5</span>
+                    <p>PLANES — 3 tarjetas de precios</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">6</span>
+                    <p>DIFERENCIALES — Por qué elegirnos</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">7</span>
+                    <p>TESTIMONIOS — Prueba social</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">8</span>
+                    <p>SOBRE NOSOTROS — Sección humana</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">9</span>
+                    <p>FAQ — Manejo de objeciones</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">10</span>
+                    <p>CTA FINAL — Última conversión</p>
+                </div>
+                <div class="structure-item">
+                    <span class="num">11</span>
+                    <p>FOOTER — Contacto completo</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CTAs -->
+        <section class="section">
+            <h2>6. Principales CTAs Propuestos</h2>
+            
+            <div class="cta-grid">
+                <div class="cta-item primary">
+                    <p class="label">"Contratar Ahora"</p>
+                    <p class="desc">Botón dorado principal</p>
+                </div>
+                <div class="cta-item secondary">
+                    <p class="label">"Conocer Planes"</p>
+                    <p class="desc">Botón outline secundario</p>
+                </div>
+                <div class="cta-item floating">
+                    <p class="label">WhatsApp</p>
+                    <p class="desc">Flotante, siempre visible</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. COMPARATIVA -->
+        <section class="section">
+            <h2>7. Comparativa: Actual vs. Nuevo</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>Actual</th>
+                        <th>Nuevo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tecnología</td>
+                        <td class="old">Bootstrap 2016</td>
+                        <td class="new">Stack moderno</td>
+                    </tr>
+                    <tr>
+                        <td>CTAs</td>
+                        <td class="old">Cero</td>
+                        <td class="new">Múltiples por sección</td>
+                    </tr>
+                    <tr>
+                        <td>Precios</td>
+                        <td class="old">Ocultos</td>
+                        <td class="new">Tarjetas con precios claros</td>
+                    </tr>
+                    <tr>
+                        <td>Confianza</td>
+                        <td class="old">Ninguna</td>
+                        <td class="new">Testimonios + números</td>
+                    </tr>
+                    <tr>
+                        <td>Valor SEO</td>
+                        <td class="old">Cero</td>
+                        <td class="new">Optimización completa</td>
+                    </tr>
+                    <tr>
+                        <td>Copy</td>
+                        <td class="old">Burocrático</td>
+                        <td class="new">Humano, claro</td>
+                    </tr>
+                    <tr>
+                        <td>Marca</td>
+                        <td class="old">Plantilla genérica</td>
+                        <td class="new">Identidad premium</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>Documento preparado en base a auditoría completa. Abril 2026.</p>
+            <p style="margin-top: 4px;">lawmedicine.com.py — Law & Medicine Paraguay</p>
+        </footer>
+    </div>
+</body>
+</html>
