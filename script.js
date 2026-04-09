@@ -316,6 +316,73 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { passive: true });
     }
+    
+    // -----------------------------------------
+    // Quiz Interactive
+    // -----------------------------------------
+    const quizQuestions = document.querySelectorAll('.quiz-question');
+    const quizProgressDots = document.querySelectorAll('.quiz-progress__dot');
+    const quizResult = document.querySelector('.quiz-result');
+    let currentQuestion = 0;
+    let totalScore = 0;
+    
+    document.querySelectorAll('.quiz-option').forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove selected from siblings
+            const parent = this.closest('.quiz-question');
+            parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Select this option
+            this.classList.add('selected');
+            
+            // Add value to score
+            const value = parseInt(this.dataset.value);
+            totalScore += value;
+            
+            // Next question after delay
+            setTimeout(() => {
+                if (currentQuestion < 3) {
+                    quizQuestions[currentQuestion].classList.remove('active');
+                    quizProgressDots[currentQuestion].classList.remove('active');
+                    quizProgressDots[currentQuestion].classList.add('completed');
+                    
+                    currentQuestion++;
+                    quizQuestions[currentQuestion].classList.add('active');
+                    quizProgressDots[currentQuestion].classList.add('active');
+                } else {
+                    // Show result
+                    quizQuestions[currentQuestion].classList.remove('active');
+                    quizProgressDots[currentQuestion].classList.remove('active');
+                    quizProgressDots[currentQuestion].classList.add('completed');
+                    
+                    quizResult.classList.add('active');
+                    quizResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Calculate and display score
+                    const riskScore = document.getElementById('risk-score');
+                    const riskDesc = document.getElementById('risk-description');
+                    
+                    let score, desc;
+                    if (totalScore < 100) {
+                        score = totalScore;
+                        desc = 'Tenés una exposición baja, pero cualquier día puede cambiar. Es mejor estar preparado.';
+                    } else if (totalScore < 200) {
+                        score = totalScore;
+                        desc = 'Tu nivel de riesgo es moderado. Con más de 15 años de experiencia, te recomendamos cobertura completa.';
+                    } else if (totalScore < 300) {
+                        score = totalScore;
+                        desc = 'Alta exposición detectada. Con tu perfil, necesitás protección total. Cada día sin cobertura es un riesgo.';
+                    } else {
+                        score = totalScore;
+                        desc = 'Exposición crítica. Sin cobertura, tu patrimonio y carrera están en peligro real. Actuá ya.';
+                    }
+                    
+                    riskScore.innerHTML = score;
+                    riskDesc.textContent = desc;
+                }
+            }, 500);
+        });
+    });
 });
 
 // -----------------------------------------

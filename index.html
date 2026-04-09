@@ -14,6 +14,9 @@
     
     <title>Law & Medicine | Defensa Legal para Profesionales de la Salud</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,12 +42,15 @@
             <nav class="nav" id="nav">
                 <ul class="nav__list">
                     <li><a href="#inicio" class="nav__link">Inicio</a></li>
+                    <li><a href="#riesgo" class="nav__link">Riesgo</a></li>
+                    <li><a href="#quiz" class="nav__link">Test</a></li>
                     <li><a href="#proteccion" class="nav__link">Protección</a></li>
                     <li><a href="#planes" class="nav__link">Planes</a></li>
                     <li><a href="#contacto" class="nav__link">Contacto</a></li>
                 </ul>
             </nav>
             
+            <a href="https://self.lawmedicine.com.py/login?next=/" class="header__login" target="_blank" rel="noopener">Ingresar</a>
             <a href="#planes" class="btn btn--primary header__cta">Contratar</a>
             
             <button class="nav__toggle" id="navToggle" aria-label="Abrir menú">
@@ -65,17 +71,17 @@
             <div class="container hero__content">
                 <div class="hero__badge reveal-up">
                     <i class="fas fa-shield-alt"></i>
-                    <span>Protección Legal Premium</span>
+                    <span>Desde 2012</span>
                 </div>
                 
                 <h1 class="hero__title reveal-up delay-1">
-                    Tu carrera médica, protegida. <span class="hero__title-accent">Siempre.</span>
+                    La protección legal que<br><span class="hero__title-accent">tu carrera merece.</span>
                 </h1>
                 
                 <div class="hero__line reveal-up delay-2"></div>
                 
                 <p class="hero__subtitle reveal-up delay-3">
-                    El único plan de defensa legal que cubre hasta <strong>Gs. 300 millones</strong> para profesionales de la salud en Paraguay.
+                    +500 médicos protegidos. Cobertura inmediata hasta <strong>Gs. 300 millones</strong>.
                 </p>
                 
                 <p class="hero__urgent reveal-up delay-4">
@@ -216,20 +222,6 @@
                     <div class="transition-line"></div>
                     <p class="transition-hint">La buena noticia es que tiene solución.</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- ========================================
-             NEW: TRANSITION BLOCK
-             Visual bridge from red to green
-        ======================================== -->
-        <section class="transition-block">
-            <div class="transition-gradient"></div>
-            <div class="container transition-block__content">
-                <p class="transition-block__text reveal-up">
-                    <i class="fas fa-lightbulb"></i>
-                    La buena noticia es que tiene solución.
-                </p>
             </div>
         </section>
 
@@ -510,43 +502,126 @@
         </section>
 
         <!-- ========================================
-             DIFERENCIALES - Premium Dark Cards
+             QUIZ SECTION - Interactive Risk Calculator
         ======================================== -->
-        <section class="diferenciales">
+        <section class="quiz-section" id="quiz">
             <div class="container">
                 <div class="section-header section-header--light reveal-up">
                     <div class="section-header__line"></div>
-                    <h2 class="section-header__title">¿Por Qué Elegirnos?</h2>
-                    <p class="section-header__subtitle">Lo que nos diferencia de cualquier otro servicio de protección legal.</p>
+                    <h2 class="section-header__title">¿Cuánto Riesgo Tenés?</h2>
+                    <p class="section-header__subtitle">Responde 4 preguntas y descubrí tu nivel de exposición.</p>
                 </div>
                 
-                <div class="diferenciales__grid">
-                    <div class="diferencial-card reveal-up delay-1">
-                        <div class="diferencial-card__icon">
-                            <i class="fas fa-user-md"></i>
-                        </div>
-                        <h3 class="diferencial-card__title">Abogacía Especializada</h3>
-                        <p class="diferencial-card__text">No somos generalistas. Solo medicina legal. Nuestros abogados entienden tu jęgo profesional y hablan tu idioma.</p>
-                    </div>
-                    
-                    <div class="diferencial-card reveal-up delay-2">
-                        <div class="diferencial-card__icon">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                        <h3 class="diferencial-card__title">Cobertura Económica Real</h3>
-                        <p class="diferencial-card__text">No prometemos "ayuda". Te decimos exactamente cuánto cubrimos y hasta cuándo. Sin letras pequeñas ni sorpresas.</p>
-                    </div>
-                    
-                    <div class="diferencial-card reveal-up delay-3">
-                        <div class="diferencial-card__icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h3 class="diferencial-card__title">Respuesta Inmediata</h3>
-                        <p class="diferencial-card__text">Tu llamado es atendido en menos de 24h, siempre. No existen las "horas hábiles" cuando tu carrera está en juego.</p>
-                    </div>
+                <div class="quiz-progress reveal-up delay-1">
+                    <div class="quiz-progress__dot active"></div>
+                    <div class="quiz-progress__dot"></div>
+                    <div class="quiz-progress__dot"></div>
+                    <div class="quiz-progress__dot"></div>
                 </div>
                 
-                <div class="scroll-hint">Deslizá para ver más</div>
+                <div class="quiz-container">
+                    <div class="quiz-question active" data-question="1">
+                        <h3 class="quiz-question__title">¿Hace cuánto tiempo ejercés la medicina?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-value="10">
+                                <span class="quiz-option__letter">A</span>
+                                <span class="quiz-option__text">Menos de 5 años</span>
+                            </div>
+                            <div class="quiz-option" data-value="25">
+                                <span class="quiz-option__letter">B</span>
+                                <span class="quiz-option__text">Entre 5 y 15 años</span>
+                            </div>
+                            <div class="quiz-option" data-value="50">
+                                <span class="quiz-option__letter">C</span>
+                                <span class="quiz-option__text">Más de 15 años</span>
+                            </div>
+                            <div class="quiz-option" data-value="100">
+                                <span class="quiz-option__letter">D</span>
+                                <span class="quiz-option__text">Más de 25 años</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question" data-question="2">
+                        <h3 class="quiz-question__title">¿En qué tipo de institución trabajás?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-value="15">
+                                <span class="quiz-option__letter">A</span>
+                                <span class="quiz-option__text">Institución pública exclusiva</span>
+                            </div>
+                            <div class="quiz-option" data-value="30">
+                                <span class="quiz-option__letter">B</span>
+                                <span class="quiz-option__text">Mixto (público y privado)</span>
+                            </div>
+                            <div class="quiz-option" data-value="50">
+                                <span class="quiz-option__letter">C</span>
+                                <span class="quiz-option__text">Solo institución privada</span>
+                            </div>
+                            <div class="quiz-option" data-value="75">
+                                <span class="quiz-option__letter">D</span>
+                                <span class="quiz-option__text">Tengo mi propia clínica/consultorio</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question" data-question="3">
+                        <h3 class="quiz-question__title">¿Realizás procedimientos invasivos o cirugías?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-value="20">
+                                <span class="quiz-option__letter">A</span>
+                                <span class="quiz-option__text">No, solo consultas y diagnósticos</span>
+                            </div>
+                            <div class="quiz-option" data-value="50">
+                                <span class="quiz-option__letter">B</span>
+                                <span class="quiz-option__text">Procedimientos menores ocasionales</span>
+                            </div>
+                            <div class="quiz-option" data-value="80">
+                                <span class="quiz-option__letter">C</span>
+                                <span class="quiz-option__text">Cirugías frecuentes</span>
+                            </div>
+                            <div class="quiz-option" data-value="100">
+                                <span class="quiz-option__letter">D</span>
+                                <span class="quiz-option__text">Cirugías de alta complejidad</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question" data-question="4">
+                        <h3 class="quiz-question__title">¿Tenés defensa legal actualmente?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-value="0">
+                                <span class="quiz-option__letter">A</span>
+                                <span class="quiz-option__text">Sí, cobertura completa</span>
+                            </div>
+                            <div class="quiz-option" data-value="30">
+                                <span class="quiz-option__letter">B</span>
+                                <span class="quiz-option__text">Sí, pero básica</span>
+                            </div>
+                            <div class="quiz-option" data-value="70">
+                                <span class="quiz-option__letter">C</span>
+                                <span class="quiz-option__text">No, pero tengo abogado de confianza</span>
+                            </div>
+                            <div class="quiz-option" data-value="100">
+                                <span class="quiz-option__letter">D</span>
+                                <span class="quiz-option__text">No, no tengo ninguna cobertura</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-result" data-question="result">
+                        <div class="quiz-result__card">
+                            <div class="quiz-result__level">Tu Nivel de Exposición</div>
+                            <div class="quiz-result__score" id="risk-score">0</div>
+                            <p class="quiz-result__description" id="risk-description">
+                                Cargando análisis...
+                            </p>
+                            <a href="#planes" class="btn btn--primary btn--lg">
+                                <i class="fas fa-shield-alt"></i>
+                                Protegerme Ahora
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -618,6 +693,104 @@
                 </div>
                 
                 <div class="scroll-hint">Deslizá para ver más</div>
+            </div>
+        </section>
+
+        <!-- ========================================
+             PROCESO - 4 Simple Steps
+        ======================================== -->
+        <section class="process-section">
+            <div class="container">
+                <div class="section-header section-header--light reveal-up">
+                    <div class="section-header__line"></div>
+                    <h2 class="section-header__title">Así De Simple Es</h2>
+                    <p class="section-header__subtitle">4 pasos para tener cobertura completa y dormir tranquilo.</p>
+                </div>
+                
+                <div class="process-grid">
+                    <div class="process-card reveal-up delay-1">
+                        <div class="process-card__step">01</div>
+                        <div class="process-card__icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Contactanos</h3>
+                        <p>Escribinos por WhatsApp o llamanos. Sin compromiso, te asesoramos sobre el plan ideal para tu perfil.</p>
+                    </div>
+                    
+                    <div class="process-card reveal-up delay-2">
+                        <div class="process-card__step">02</div>
+                        <div class="process-card__icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3>Completá Tu Perfil</h3>
+                        <p>En menos de 15 minutos llenás el formulario con tus datos profesionales.</p>
+                    </div>
+                    
+                    <div class="process-card reveal-up delay-3">
+                        <div class="process-card__step">03</div>
+                        <div class="process-card__icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Activá Tu Cobertura</h3>
+                        <p>Listo. Desde el primer día ya estás protegido. Recibís tu certificado y línea 24/7.</p>
+                    </div>
+                    
+                    <div class="process-card reveal-up delay-4">
+                        <div class="process-card__step">04</div>
+                        <div class="process-card__icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Ejercé Con Tranquilidad</h3>
+                        <p>Si algún día necesitás ayuda, nos llamás y tenemos tu espalda. Simple.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================
+             FOR WHOM - Target Audience
+        ======================================== -->
+        <section class="for-whom-section">
+            <div class="container">
+                <div class="section-header section-header--light reveal-up">
+                    <div class="section-header__line"></div>
+                    <h2 class="section-header__title">¿Es Para Vos?</h2>
+                    <p class="section-header__subtitle">Si sos profesional de la salud en Paraguay, necesitás esto.</p>
+                </div>
+                
+                <div class="for-whom-grid">
+                    <div class="for-whom-card reveal-up delay-1">
+                        <div class="for-whom-card__icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3>Médicos Generales</h3>
+                        <p>Atenés pacientes todos los días. Cada diagnóstico es un potencial problema legal. Coverage te protege de demandas por diagnóstico errado o tratamiento inadecuado.</p>
+                    </div>
+                    
+                    <div class="for-whom-card reveal-up delay-2">
+                        <div class="for-whom-card__icon">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <h3>Especialistas</h3>
+                        <p>Cirujanos, cardiólogos, obstetras, traumatólogos. Cuanto más alta la especialidad, mayor el riesgo. No improvises con tu formación.</p>
+                    </div>
+                    
+                    <div class="for-whom-card reveal-up delay-3">
+                        <div class="for-whom-card__icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <h3>Dueños de Clínicas</h3>
+                        <p>Tu clínica es tu patrimonio. Protegé no solo tu práctica, sino también tu negocio. Cobertura laboral, civil, administrativa.</p>
+                    </div>
+                    
+                    <div class="for-whom-card reveal-up delay-4">
+                        <div class="for-whom-card__icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Médicos con Experiencia</h3>
+                        <p>Más experiencia = más pacientes = más exposición. Después de 15 años de carrera, el riesgo acumulativo es real. Estás a tiempo.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
